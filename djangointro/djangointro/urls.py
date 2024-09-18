@@ -8,8 +8,9 @@ STEP 6: Install psycopg2
 STEP 7: Create data base
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('todos/', include("djangointro.todo_app.urls"))
 ]
