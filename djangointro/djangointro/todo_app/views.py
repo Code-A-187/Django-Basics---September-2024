@@ -3,12 +3,13 @@ from djangointro.todo_app.models import Task
 
 
 def index(request):
-    tasks = Task.objects.all()
+    title_filter = request.GET.get('title_filter', '')
+    if title_filter:
+        tasks = Task.objects.filter(name__icontains=title_filter)
+    else:
+        tasks = Task.objects.all()
 
-    result = '\n'.join([
-        '<h1>TASKS</h1>',
-        '<ul>',
-        *[f"<li>{task.name}</li>" for task in tasks],
-        '</ul>',
-    ])
-    return render(request, 'tasks/index.html')
+    context = {
+        'tasks': tasks
+    }
+    return render(request, 'tasks/index.html', context)
