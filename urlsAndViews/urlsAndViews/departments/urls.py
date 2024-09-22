@@ -5,5 +5,9 @@ from urlsAndViews.departments.views import index
 
 urlpatterns = [
     path('', views.index),
-    path('<param>/', views.view_with_name)
+    path('<int:pk>/', views.view_with_int_pk),
+    path('<variable>/', views.view_with_name),
+
+
+    # path('<param>/', views.view_with_args_kwargs),
 ]
