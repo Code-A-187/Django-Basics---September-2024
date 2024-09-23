@@ -26,3 +26,7 @@ def view_with_slug(request, pk, slug):
     department = Department.objects.get(pk=pk, slug=slug)
 
     return HttpResponse(f"<h1>Department from slug: {department}</h1>")
+
+
+def show_archive(request,archive_year):
+    return HttpResponse(f"<h1>The year is: {archive_year}")
