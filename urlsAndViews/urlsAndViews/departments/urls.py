@@ -4,7 +4,8 @@ from urlsAndViews.departments import views
 from urlsAndViews.departments.views import index
 
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name='home'),
+    path('redirect-to-view/', views.redirect_to_view, name='redirect-view'),
     path('numbers/', include([
         path('<int:pk>/', views.view_with_int_pk),
         path('<int:pk>/<slug:slug>/', views.view_with_slug),

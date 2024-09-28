@@ -1,13 +1,16 @@
 import json
 
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse, Http404, HttpResponseNotFound
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
 
 from urlsAndViews.departments.models import Department
 
 
 def index(request):
-    return HttpResponse('<h1>Hello, world!</h1>')
+    url = reverse('redirect-view')
+    url_lazy = reverse_lazy('redirect-view')
+    return HttpResponse(f'<h1>{ url_lazy }</h1>')
 
 
 def view_with_name(request, variable):
@@ -28,10 +31,29 @@ def view_with_int_pk(request, pk):
 
 
 def view_with_slug(request, pk, slug):
-    department = Department.objects.get(pk=pk, slug=slug)
+    # OPTION 1 for 404
+    # department = Department.objects.filter(pk=pk, slug=slug)
+    # if not department:
+    #     raise Http404
 
-    return HttpResponse(f"<h1>Department from slug: {department}</h1>")
+    # OPTION 2
+    department = get_object_or_404(Department, pk=pk, slug=slug)
+
+    raise Http404
+
+    # return HttpResponse(f"<h1>Department from slug: {department.first()}</h1>")
 
 
 def show_archive(request,archive_year):
     return HttpResponse(f"<h1>The year is: {archive_year}")
+
+
+def redirect_to_softuni(request):
+    return redirect('https://softuni.bg')
+
+
+def redirect_to_view(request):
+    # OPTION 1 redirect('http://localhost:8000') breaks abstraction
+    # OPTION 2 redirect(index) # breaks SR if view is from another app
+    return redirect('numbers', pk=2)  # Best option
+
