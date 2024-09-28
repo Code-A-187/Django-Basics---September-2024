@@ -1,4 +1,6 @@
-from django.http import HttpResponse
+import json
+
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from urlsAndViews.departments.models import Department
@@ -10,7 +12,9 @@ def index(request):
 
 def view_with_name(request, variable):
     # should be named same as in the urls (can get it with variables or args and kwargs)
-    return HttpResponse(f'<h1>Variable: {variable}</h1>')
+    # return HttpResponse(f'<h1>Variable: {variable}</h1>')
+    return render(request,'departments/name_template.html', {'variable': variable})
+
 
 
 def view_with_args_kwargs(request, *args, **kwargs):
@@ -19,7 +23,8 @@ def view_with_args_kwargs(request, *args, **kwargs):
 
 
 def view_with_int_pk(request, pk):
-    return HttpResponse(f'<h1>Int pk with pk: {pk}</h1>')
+    # return HttpResponse(json.dumps({"pk": pk}), content_type="application/json")
+    return JsonResponse({"pk":pk})  #  under the hood makes json.dumps as shown above
 
 
 def view_with_slug(request, pk, slug):
