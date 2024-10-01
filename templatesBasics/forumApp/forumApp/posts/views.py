@@ -25,6 +25,7 @@ def index(request):
 
     return render(request, 'base.html', context)
 
+
 def dashboard(request):
     context = {
         "posts": [
