@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load markdown_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,12 +17,12 @@
             <div class="posts">
             {%  for post in posts %}
                 <div class="post">
-                    <h2>{{ post.title|capfirst }}</h2>
+                    <h2>{{ post.title|markdown|capfirst }}</h2>
                 
                     {% if not post.content %}
                         {% lorem 3 p %}
                     {% else %}
-                        {{ post.content|truncatechars:10 }}
+                        {{ post.content|markdown}}
                     {% endif %}
                 <div class="post-meta"> 
                     <span>Posted by {{ post.author|default:"anonymous" }} on {{ post.created_at|date:"d-M-Y" }}</span>

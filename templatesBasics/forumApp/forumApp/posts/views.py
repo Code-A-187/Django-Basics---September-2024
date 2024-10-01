@@ -32,13 +32,13 @@ def dashboard(request):
             {
                 "title": "How to create django project 1",
                 "author": "Anton Simeonov",
-                "content": "I really don't know how to create a project",
+                "content": "I **really** don't know how to create a project",
                 "created_at": datetime.now(),
             },
             {
                 "title": "How to create django project 2",
                 "author": "",
-                "content": "I really don't know how to create a project",
+                "content": "### I really don't know how to create a project",
                 "created_at": datetime.now(),
             },
             {
