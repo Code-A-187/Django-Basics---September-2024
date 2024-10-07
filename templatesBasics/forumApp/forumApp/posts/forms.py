@@ -9,6 +9,16 @@ class PostBaseForm(forms.ModelForm):
         model = Post
         fields = '__all__'
 
+        error_messages = {
+            'title': {
+                'required': 'Please enter the title of your post',
+                'max_length': f'The title is too long. Please keep it under {Post.TITLE_MAX_LENGTH} characters'
+            },
+            'author': {
+                'required': 'Please enter an author'
+            }
+        }
+
 
 class PostCreateForm(PostBaseForm):
         pass
@@ -30,7 +40,7 @@ class SearchForm(forms.Form):
     query = forms.CharField(
         label='',
         required=False,
-        max_length=100,
+        max_length=10,
         widget=forms.TextInput(
             attrs={
                 'placeholder': 'Search for a post...'
