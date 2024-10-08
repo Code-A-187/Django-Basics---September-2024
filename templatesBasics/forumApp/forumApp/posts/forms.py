@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from forumApp.posts.choices import LanguageChoice
 from forumApp.posts.mixins import DisableFieldsMixin
@@ -19,6 +20,28 @@ class PostBaseForm(forms.ModelForm):
                 'required': 'Please enter an author'
             }
         }
+
+    def clean_author(self):
+        author = self.cleaned_data.get('author')
+        if not author[0].isupper():
+            raise ValidationError('Author name should start with capital letter!')
+
+        return author
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        title = cleaned_data.get('title')
+        content = cleaned_data.get('content')
+
+        if title and content and title in content:
+            raise ValidationError('The post title name could not be included in the post content')
+
+        return cleaned_data
+
+    def save(self, commit=True):
+        post = super().save(commit=False)
+        post.title = post.title.capitalize()
 
 
 class PostCreateForm(PostBaseForm):
