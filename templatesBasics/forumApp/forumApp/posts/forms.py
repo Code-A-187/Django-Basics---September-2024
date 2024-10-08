@@ -6,6 +6,8 @@ from forumApp.posts.mixins import DisableFieldsMixin
 from forumApp.posts.models import Post
 
 
+
+
 class PostBaseForm(forms.ModelForm):
     class Meta:
         model = Post
@@ -42,6 +44,11 @@ class PostBaseForm(forms.ModelForm):
     def save(self, commit=True):
         post = super().save(commit=False)
         post.title = post.title.capitalize()
+
+        if commit:
+            post.save()
+
+        return post
 
 
 class PostCreateForm(PostBaseForm):
