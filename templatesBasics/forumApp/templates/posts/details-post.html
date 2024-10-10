@@ -5,6 +5,9 @@
     <div class="posts">
         <div class="post">
             <div class="header">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" width="50" height="50" class="img-fluid">
+                {% endif %}
                 <h2>{{ post.title|markdown|capfirst }}</h2>
                 <div class="icons">
                      <a href="{% url 'edit-post' post.pk %}">  
@@ -40,5 +43,19 @@
                     {% endfor %}
                 </div>
             </form>
+        
+        <h2>Comments</h2>
+        <div class="comments-section">
+            {% for comment in comments %}
+                <div class="media mb-3 comment-item">
+                    <img src="https://via.placeholder.com/50" class="mr3 rounded-circle comment-avatar">
+                </div>
+                <div class="media-body comment-content">
+                    <h5 class="mt-0 comment author" > {{ comment.author }}</h5>
+                    <p class="comment-text"> {{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+            
     </div>
 {%  endblock %}
