@@ -1,21 +1,53 @@
 from django.forms import modelform_factory
 from django.shortcuts import render, redirect
+from django.utils.decorators import classonlymethod
+from django.views import View
 
 from forumApp.posts.forms import PostCreateForm, PostDeleteForm, SearchForm, PostEditForm, CommentFormSet
 from forumApp.posts.models import Post
 
 
-def index(request):
-    post_form = modelform_factory(
-        Post,
-        fields=('title', 'content', 'author', 'languages'),
-    )
+class BaseView:
+    @classonlymethod
+    def as_view(cls):
 
-    context = {
-        "my_form": post_form,
-    }
+        def view(request, *args, **kwargs):
+            view_instance = cls()
+            return view_instance.dispatch(request, *args, **kwargs)
 
-    return render(request, 'common/index.html', context )
+        return view
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            self.get(request, *args, **kwargs)
+        elif request.method == 'POST':
+            return self.post(request, *args, **kwargs)
+
+class Index(View):
+    def get(self, request, *args, **kwargs):
+        post_form = modelform_factory(
+            Post,
+            fields=('title', 'content', 'author', 'languages'),
+        )
+
+        context = {
+            "my_form": post_form,
+        }
+
+        return render(request, 'common/index.html', context)
+
+
+# def index(request):
+#     post_form = modelform_factory(
+#         Post,
+#         fields=('title', 'content', 'author', 'languages'),
+#     )
+#
+#     context = {
+#         "my_form": post_form,
+#     }
+#
+#     return render(request, 'common/index.html', context )
 
 
 def dashboard(request):
