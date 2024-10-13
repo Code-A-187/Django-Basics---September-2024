@@ -1,7 +1,11 @@
+from datetime import datetime
+
 from django.forms import modelform_factory
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.utils.decorators import classonlymethod
 from django.views import View
+from django.views.generic import TemplateView, RedirectView
 
 from forumApp.posts.forms import PostCreateForm, PostDeleteForm, SearchForm, PostEditForm, CommentFormSet
 from forumApp.posts.models import Post
@@ -23,15 +27,32 @@ class BaseView:
         elif request.method == 'POST':
             return self.post(request, *args, **kwargs)
 
+
+class IndexView(TemplateView):
+    template_name = 'common/index.html'  # static way
+    extra_context = {
+        'static_time': datetime.now(),
+    }  # statix way
+
+    def get_context_data(self, **kwargs):  # dynamic way
+        context = super().get_context_data(**kwargs)
+
+        context['dynamic_time'] = datetime.now()
+
+        return context
+
+    def get_template_names(self): # dynamic way
+        if self.request.user.is_authenticated:
+            return ['common/index_logged_in.html']
+        else:
+            return ['common/index.html']
+
+
 class Index(View):
     def get(self, request, *args, **kwargs):
-        post_form = modelform_factory(
-            Post,
-            fields=('title', 'content', 'author', 'languages'),
-        )
 
         context = {
-            "my_form": post_form,
+            'dynamic_time': datetime.now()
         }
 
         return render(request, 'common/index.html', context)
@@ -137,3 +158,10 @@ def delete_post(request, pk: int):
     }
 
     return render(request, 'posts/delete-post.html', context)
+
+
+class RedirectHomeView(RedirectView):
+    url = reverse_lazy('index') # static way
+
+    def get_redirect_url(self, *args, **kwargs):
+        pass
