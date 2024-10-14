@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import classonlymethod
 from django.views import View
-from django.views.generic import TemplateView, RedirectView, ListView, FormView, CreateView
+from django.views.generic import TemplateView, RedirectView, ListView, FormView, CreateView, UpdateView
 
 from forumApp.posts.forms import PostCreateForm, PostDeleteForm, SearchForm, PostEditForm, CommentFormSet
 from forumApp.posts.models import Post
@@ -108,7 +108,9 @@ class DashboardView(ListView, FormView):
 
 class AddPostView(CreateView):
     model = Post
-    form_class = 
+    form_class = PostCreateForm
+    template_name = 'posts/add-post.html'
+    success_url = reverse_lazy('dash')
 
 # def add_post(request):
 #     form = PostCreateForm(request.POST or None, request.FILES or None)
@@ -125,24 +127,30 @@ class AddPostView(CreateView):
 #     return render(request, 'posts/add-post.html', context)
 
 
-def edit_post(request, pk):
-    post = Post.objects.get(pk=pk)
+class EditPostView(UpdateView):
+    model = Post
+    form_class = PostEditForm
+    template_name = 'posts/edit-post.html'
+    success_url = reverse_lazy('dash')
 
-    if request.method == 'POST':
-        form = PostEditForm(request.POST, instance=post)
-
-        if form.is_valid():
-            form.save()
-            return redirect('dash')
-    else:
-        form = PostEditForm(instance=post)
-
-    context = {
-        'form': form,
-        'post': post,
-    }
-
-    return render(request, 'posts/edit-post.html', context)
+# def edit_post(request, pk):
+#     post = Post.objects.get(pk=pk)
+#
+#     if request.method == 'POST':
+#         form = PostEditForm(request.POST, instance=post)
+#
+#         if form.is_valid():
+#             form.save()
+#             return redirect('dash')
+#     else:
+#         form = PostEditForm(instance=post)
+#
+#     context = {
+#         'form': form,
+#         'post': post,
+#     }
+#
+#     return render(request, 'posts/edit-post.html', context)
 
 
 def details_page(request, pk: int):
