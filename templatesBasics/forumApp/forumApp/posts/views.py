@@ -76,8 +76,9 @@ class DashboardView(ListView, FormView):
     template_name = 'posts/dashboard.html'
     context_object_name = 'posts'
     form_class = SearchForm
+    paginate_by = 2
     success_url = reverse_lazy('dash')
-    model = Post
+    queryset = Post.objects.all()
 
     def get_queryset(self):
         queryset = Post.objects.all()
@@ -167,7 +168,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['formset'] = CommentFormSet
         return context
-    
+
     def post(self, request, *args, **kwargs):
         post = self.get_object()
         formset = CommentFormSet(request.POST)
