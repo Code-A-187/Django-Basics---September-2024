@@ -27,6 +27,9 @@
                 <h1>No Posts</h1>            
             {% endfor %}
             
+            {% if not page_obj.has_next and page_obj.number == 1 %}
+                <p>That's the only page</p>
+            {% else %}
             <div class="pagination">
                 <span class="step-links">
                     {% if page_obj.has_previous %}
@@ -44,6 +47,7 @@
                     {% endif %}
                 </span>
             </div>
+            {% endif %}
             
         </div>
     </div>

@@ -1,13 +1,15 @@
 from datetime import datetime
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelform_factory
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.utils.decorators import classonlymethod
+from django.utils.decorators import classonlymethod, method_decorator
 from django.views import View
 from django.views.generic import TemplateView, RedirectView, ListView, FormView, CreateView, UpdateView, DeleteView, \
     DetailView
 
+from forumApp.decorators import measure_execution_time
 from forumApp.posts.forms import PostCreateForm, PostDeleteForm, SearchForm, PostEditForm, CommentFormSet
 from forumApp.posts.models import Post
 
@@ -29,6 +31,7 @@ class BaseView:
             return self.post(request, *args, **kwargs)
 
 
+@method_decorator(measure_execution_time, name='dispatch')
 class IndexView(TemplateView):
     template_name = 'common/index.html'  # static way
     extra_context = {
@@ -42,7 +45,7 @@ class IndexView(TemplateView):
 
         return context
 
-    def get_template_names(self): # dynamic way
+    def get_template_names(self):  # dynamic way
         if self.request.user.is_authenticated:
             return ['common/index_logged_in.html']
         else:
@@ -51,7 +54,6 @@ class IndexView(TemplateView):
 
 class Index(View):
     def get(self, request, *args, **kwargs):
-
         context = {
             'dynamic_time': datetime.now()
         }
@@ -113,6 +115,7 @@ class AddPostView(CreateView):
     form_class = PostCreateForm
     template_name = 'posts/add-post.html'
     success_url = reverse_lazy('dash')
+
 
 # def add_post(request):
 #     form = PostCreateForm(request.POST or None, request.FILES or None)
@@ -186,6 +189,7 @@ class PostDetailView(DetailView):
 
         return self.render_to_response(context)
 
+
 # def details_page(request, pk: int):
 #     post = Post.objects.get(pk=pk)
 #     formset = CommentFormSet(request.POST or None)
@@ -217,6 +221,7 @@ class DeletePostView(DeleteView, FormView):
         pk = self.kwargs.get(self.pk_url_kwarg)
         post = Post.objects.get(pk=pk)
         return post.__dict__
+
 
 # def delete_post(request, pk: int):
 #     post = Post.objects.get(pk=pk)
