@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "ExamPrep.albums.apps.AlbumsConfig",
-    "ExamPrep.profiles.apps.ProfilesConfig"
+    "ExamPrep.profiles.apps.ProfilesConfig",
+    "ExamPrep.common.apps.CommonConfig"
 ]
 
 MIDDLEWARE = [

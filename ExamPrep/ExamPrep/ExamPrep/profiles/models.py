@@ -1,8 +1,7 @@
-from django.core.validators import MinLengthValidator, MinValueValidator
+from django.core.validators import MinLengthValidator
 from django.db import models
 
-from ExamPrep.albums.choices import GenreChoices
-from ExamPrep.profiles.validators import AlphanumericValidator
+from ExamPrep.profiles.validators import AlphaNumericValidator
 
 
 class Profile(models.Model):
@@ -10,7 +9,7 @@ class Profile(models.Model):
         max_length=15,
         validators=[
             MinLengthValidator(2),
-            AlphanumericValidator(),
+            AlphaNumericValidator(),
         ]
     )
 

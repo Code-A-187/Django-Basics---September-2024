@@ -1,10 +1,10 @@
 from django.core.exceptions import ValidationError
+from django.template.defaultfilters import slugify
 from django.utils.deconstruct import deconstructible
-from django.utils.text import slugify
 
 
 @deconstructible
-class AlphanumericValidator(object):
+class AlphaNumericValidator:
     def __init__(self, message=None):
         self.message = message
 
@@ -19,6 +19,6 @@ class AlphanumericValidator(object):
         else:
             self.__message = value
 
-    def __call__(self, value, *args, **kwargs):
-        if not value != slugify(value):
+    def __call__(self, value: str, *args, **kwargs):
+        if "-" in value or value.lower() != slugify(value):
             raise ValidationError(self.message)
