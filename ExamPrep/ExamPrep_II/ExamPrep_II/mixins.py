@@ -1,12 +1,16 @@
 class PlaceholderMixin:
-    def add_placeholders(self):
-        for field_name, field in self.fields.items():  # ('first_name': field_obj)
-            placeholder = field.label or field_name.replace('_', ' ').capitalize()
-            field.widget.attrs['placeholder'] = placeholder
+    placeholders = {}
+
+    def set_placeholders(self):
+        for field_name, field in self.fields.items():
+            # Fetch placeholder text from the dictionary if it exists
+            placeholder_text = self.placeholders.get(field_name)
+            if placeholder_text:
+                field.widget.attrs['placeholder'] = placeholder_text
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.add_placeholders()
+        self.set_placeholders()
 
 
 class NoLabelMixin:

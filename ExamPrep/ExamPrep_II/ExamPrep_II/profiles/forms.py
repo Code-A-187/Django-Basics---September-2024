@@ -11,6 +11,12 @@ class ProfileBaseForm(forms.ModelForm):
 
 
 class ProfileCreateForm(PlaceholderMixin, NoLabelMixin, ProfileBaseForm):
+    placeholders = {
+        "first_name": "First Name",
+        "last_name": "Last Name",
+        "email": "Email",
+    }
+
     class Meta(ProfileBaseForm.Meta):
         exclude = ['age', 'image_url']
 
