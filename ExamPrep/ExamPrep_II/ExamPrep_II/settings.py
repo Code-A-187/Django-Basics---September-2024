@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "ExamPrep_II.profiles.apps.ProfilesConfig",
-    "ExamPrep_II.fruits.apps.FruitsConfig"
+    "ExamPrep_II.fruits.apps.FruitsConfig",
+    "ExamPrep_II.common.apps.CommonConfig"
 ]
 
 MIDDLEWARE = [
@@ -123,6 +124,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = (
+    BASE_DIR / 'static',
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

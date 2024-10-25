@@ -1,5 +1,5 @@
 from django import template
-from ExamPrep.utils import get_user_obj
+from ExamPrep_II.utils import get_user_obj
 
 register = template.Library()
 
