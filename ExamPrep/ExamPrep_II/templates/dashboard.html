@@ -8,7 +8,7 @@
                     <img src="{{fruit.image_url}}" alt="example1"/>
                     <h3 class="title">{{ fruit.name }}</h3>
                     <p class="description">{{ fruit.description|truncatechars:50 }}</p>
-                    <a class="details-btn" href="#">More Info</a>
+                    <a class="details-btn" href="{% url 'fruit-details' fruit.pk %}">More Info</a>
                 </div>
             {% endfor %}
         </section>
