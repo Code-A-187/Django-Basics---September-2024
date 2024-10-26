@@ -1,9 +1,11 @@
+import re
+
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 
 
 @deconstructible
-class YearValidator:
+class UsernameValidator:
     def __init__(self, message=None):
         self.message = message
 
@@ -19,5 +21,5 @@ class YearValidator:
             self.__message = value
 
     def __call__(self, value):
-        if not (1999 <= value <= 2030):
+        if not re.match("^[A-Za-z0-9_]*$", value):
             raise ValidationError(self.message)

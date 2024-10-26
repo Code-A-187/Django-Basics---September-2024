@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MinValueValidator
 
-from WorldOfSpeedApp.cars.validators import UsernameValidator
+from WorldOfSpeedApp.profiles.validators import UsernameValidator
 
 
 class Profile(models.Model):
