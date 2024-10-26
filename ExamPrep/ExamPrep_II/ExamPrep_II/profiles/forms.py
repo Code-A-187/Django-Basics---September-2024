@@ -29,6 +29,14 @@ class ProfileCreateForm(PlaceholderMixin, NoLabelMixin, ProfileBaseForm):
         )
 
 
-class ProfileEditForm(PlaceholderMixin, NoLabelMixin, ProfileBaseForm):
+class ProfileEditForm(ProfileBaseForm):
     class Meta(ProfileBaseForm.Meta):
-        exclude = ['password']
+        exclude = ['password', 'email']
+
+        labels = {
+            'first_name': 'First Name',
+            'last_name': 'Last Name',
+            'image_url': 'Image URL'
+        }
+
+

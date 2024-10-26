@@ -19,9 +19,17 @@ class FruitCreateForm(PlaceholderMixin, NoLabelMixin, FruitBaseForm):
 
 
 class FruitEditForm(FruitBaseForm):
-    pass
+    class Meta(FruitBaseForm.Meta):
+        labels = {
+            'image_url': 'Image URL',
+        }
 
 
 class FruitDeleteForm(ReadOnlyMixin, FruitBaseForm):
     read_only_fields = ['name', 'image_url', 'description', 'nutrition']
+
+    class Meta(FruitBaseForm.Meta):
+        labels = {
+            'image_url': 'Image URL',
+        }
 

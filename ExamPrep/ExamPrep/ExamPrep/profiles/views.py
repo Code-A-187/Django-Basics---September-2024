@@ -17,4 +17,3 @@ class ProfileDeleteView(DeleteView):
     def get_object(self, queryset=None):
         return get_user_obj()
 
-
