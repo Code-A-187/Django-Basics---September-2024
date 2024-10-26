@@ -7,6 +7,9 @@ class FruitBaseForm(forms.ModelForm):
     class Meta:
         model = Fruit
         exclude = ('owner', )
+        labels = {
+            'image_url': 'Image URL',
+        }
 
 
 class FruitCreateForm(PlaceholderMixin, NoLabelMixin, FruitBaseForm):
@@ -19,17 +22,9 @@ class FruitCreateForm(PlaceholderMixin, NoLabelMixin, FruitBaseForm):
 
 
 class FruitEditForm(FruitBaseForm):
-    class Meta(FruitBaseForm.Meta):
-        labels = {
-            'image_url': 'Image URL',
-        }
+    pass
 
 
 class FruitDeleteForm(ReadOnlyMixin, FruitBaseForm):
     read_only_fields = ['name', 'image_url', 'description', 'nutrition']
-
-    class Meta(FruitBaseForm.Meta):
-        labels = {
-            'image_url': 'Image URL',
-        }
 

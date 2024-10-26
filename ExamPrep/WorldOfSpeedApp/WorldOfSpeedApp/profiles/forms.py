@@ -8,19 +8,22 @@ class ProfileBaseForm(forms.ModelForm):
         model = Profile
         fields = "__all__"
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password'].widget = forms.PasswordInput()
+
 
 class ProfileCreateForm(ProfileBaseForm):
 
     class Meta(ProfileBaseForm.Meta):
         fields = ['username', 'email', 'age', 'password']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['password'].widget = forms.PasswordInput()
-
 
 class ProfileEditForm(ProfileBaseForm):
-    pass
+    class Meta(ProfileBaseForm.Meta):
+        labels = {
+            'image_url': 'Profile Picture'
+        }
 
 
 class ProfileDeleteForm(ProfileBaseForm):
