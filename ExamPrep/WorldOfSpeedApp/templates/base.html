@@ -1,32 +1,32 @@
+{% load get_user %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/style/style.css" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/static/style/style.css"/>
     <title>WorldOfSpeed</title>
-  </head>
-
-  <body>
-    <div id="box">
-      <header>
-        <!-- Navigation Bar -->
+</head>
+<body>
+<div id="box">
+    <header>
         <h1>
-          <a class="index-navigation" href="#"
+            <a class="index-navigation" href="{% url 'index' %}"
             ><span>World of Speed</span></a
-          >
+            >
         </h1>
         <nav>
-          <!-- if the user has not created a profile -->
-          <a href="#">Create Profile</a>
-
-          <!-- if the user has created a profile -->
-          <a href="#">Catalogue</a>
-          <a href="#">Create Car</a>
-          <a href="#">Profile</a>
+            {% get_user as profile %}
+            {% if not profile %}
+                <a href="{% url 'profile-create' %}">Create Profile</a>
+            {% else %}
+                <a href="{% url 'catalogue' %}">Catalogue</a>
+                <a href="#">Create Car</a>
+                <a href="#">Profile</a>
+            {% endif %}
         </nav>
-      </header>
-    
+    </header>
+
     {% block content %}
     {% endblock %}
     <footer>&copy;SoftUni Team 2024. All rights reserved.</footer>

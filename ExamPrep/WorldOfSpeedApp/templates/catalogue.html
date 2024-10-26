@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
+{% load get_user %}
 {% block content %}
-    <!-- Display a paragraph: If there are no cars yet-->
+    {% get_user as profile %}
+    
     <p class="no-articles">No cars yet</p>
 
     <!-- Display a card with information about each car (if any)-->

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "WorldOfSpeedApp.profiles.apps.ProfilesConfig",
-    "WorldOfSpeedApp.cars.apps.CarsConfig"
+    "WorldOfSpeedApp.cars.apps.CarsConfig",
+    "WorldOfSpeedApp.common.apps.CommonConfig"
 ]
 
 MIDDLEWARE = [
