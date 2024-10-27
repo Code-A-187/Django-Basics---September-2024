@@ -22,7 +22,7 @@ class Author(models.Model):
         ]
     )
 
-    password = models.CharField(
+    passcode = models.CharField(
         max_length=6,
         validators=[
             SixDigitsValidator(),

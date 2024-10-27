@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "FurryFunniesApp.authors.apps.AuthorsConfig",
-    "FurryFunniesApp.posts.apps.PostsConfig"
+    "FurryFunniesApp.posts.apps.PostsConfig",
+    "FurryFunniesApp.common.apps.CommonConfig"
 ]
 
 MIDDLEWARE = [

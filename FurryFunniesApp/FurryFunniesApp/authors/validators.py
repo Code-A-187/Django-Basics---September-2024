@@ -19,9 +19,9 @@ class OnlyLettersValidator:
         else:
             self.__message = value
 
-    def __call__(self, value):
+    def __call__(self, value: str, *args, **kwargs):
         if not value.isalpha():
-            return ValidationError(self.message)
+            raise ValidationError(self.message)
 
 
 @deconstructible
@@ -41,6 +41,6 @@ class SixDigitsValidator:
         else:
             self.__password = value
 
-    def __call__(self, value):
+    def __call__(self, value: str, *args, **kwargs):
         if not (value.isdigit() and len(value) == 6):
-            return ValidationError(self.password)
+            raise ValidationError(self.password)
